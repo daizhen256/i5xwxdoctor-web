@@ -8,7 +8,7 @@ import {UPDATE, DELETE} from '../../../constants/options'
 const confirm = Modal.confirm
 
 function List({
-  accountRole: {
+  systemRole: {
     list
   },
   loading,
@@ -74,7 +74,7 @@ function List({
 }
 
 List.propTypes = {
-  accountRole: PropTypes.object.isRequired,
+  systemRole: PropTypes.object.isRequired,
   onDeleteItem: PropTypes.func.isRequired,
   onEditItem: PropTypes.func.isRequired
 }

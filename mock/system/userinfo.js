@@ -3,7 +3,7 @@ const Mock = require('mockjs')
 import mockStorge from '../../src/utils/mockStorge'
 import { getBody } from '../utils'
 
-let dataKey = mockStorge('AccountUserList', Mock.mock({
+let dataKey = mockStorge('SystemUserList', Mock.mock({
   'data|100': [
     {
       'id|+1': 1,

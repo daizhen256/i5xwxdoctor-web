@@ -55,42 +55,34 @@ export default function({history, app}) {
         },
         //diancai
         {
-          path: 'diancai',
-          name: 'diancai',
+          path: 'system',
+          name: 'system',
           childRoutes: [
             {
-              path: 'dishes',
-              name: 'dishes',
+              path: 'role',
+              name: 'role',
               getComponent(nextState, cb) {
                 require.ensure([], require => {
-                  registerModel(app, require('./models/diancai/dishes'))
-                  cb(null, require('./routes/diancai/dishes'))
-                }, 'diancai-dishes')
+                  registerModel(app, require('./models/system/role'))
+                  cb(null, require('./routes/system/Role'))
+                }, 'system-role')
               }
             }, {
-              path: 'mcinfo',
-              name: 'mcinfo',
+              path: 'user',
+              name: 'user',
               getComponent(nextState, cb) {
                 require.ensure([], require => {
-                  registerModel(app, require('./models/diancai/mcinfo'))
-                  cb(null, require('./routes/diancai/mcinfo'))
-                }, 'diancai-mcinfo')
+                  registerModel(app, require('./models/system/user'))
+                  cb(null, require('./routes/system/User'))
+                }, 'system-userinfo')
               }
-            }
-          ]
-        },
-        //system
-        {
-          path: 'card',
-          name: 'card',
-          childRoutes: [
-            {
+            }, {
               path: 'modify-password',
               name: 'modify-password',
               getComponent(nextState, cb) {
                 require.ensure([], require => {
-                  registerModel(app, require('./models/card/modifyPassword'))
-                  cb(null, require('./routes/card/ModifyPassword'))
+                  registerModel(app, require('./models/system/modifyPassword'))
+                  cb(null, require('./routes/system/ModifyPassword'))
                 }, 'modify-password')
               }
             }

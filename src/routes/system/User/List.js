@@ -8,7 +8,7 @@ import {UPDATE, STATUS, DELETE} from '../../../constants/options'
 const confirm = Modal.confirm
 
 function List({
-  accountAdmin: {
+  systemUser: {
     list,
     pagination
   },
@@ -112,7 +112,7 @@ function List({
 }
 
 List.propTypes = {
-  accountAdmin: PropTypes.object.isRequired,
+  systemUser: PropTypes.object.isRequired,
   onDeleteItem: PropTypes.func.isRequired,
   onEditItem: PropTypes.func.isRequired
 }

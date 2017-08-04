@@ -11,38 +11,27 @@ const menu = [
     icon: 'laptop',
     power: [1, 2]
   },
-  //account
+  //system
   {
     id: _.uniqueId(),
-    key: 'diancai',
-    name: '点餐',
+    key: 'system',
+    name: '系统管理',
     icon: 'user',
     clickable: false,
     power: [1],
     children: [
       {
         id: _.uniqueId(),
-        key: 'mcinfo',
-        name: '门店开通业务',
+        key: 'user',
+        name: '用户管理',
         power: [1, 2, 3, 4, 5]
       },
       {
         id: _.uniqueId(),
-        key: 'dishes',
-        name: '门店菜品数据',
+        key: 'role',
+        name: '权限管理',
         power: [1, 2, 3, 4, 5]
-      }
-    ]
-  },
-  //system
-  {
-    id: _.uniqueId(),
-    key: 'card',
-    name: '卡主页',
-    icon: 'appstore',
-    clickable: false,
-    power: [1],
-    children: [
+      },
       {
         id: _.uniqueId(),
         key: 'modify-password',

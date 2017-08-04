@@ -57,7 +57,7 @@ const dic = {
   }
 }
 
-let dataKey = mockStorge('AccountRoleList', Mock.mock({
+let dataKey = mockStorge('SystemRoleList', Mock.mock({
   'data|3': [
     {
       'id|+1': 1,
@@ -71,7 +71,7 @@ let dataKey = mockStorge('AccountRoleList', Mock.mock({
   }
 }))
 
-let dataKeyPL = mockStorge('AccountPowerList', Mock.mock({
+let dataKeyPL = mockStorge('SystemPowerList', Mock.mock({
   data: dic
 }))
 

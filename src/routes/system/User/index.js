@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {routerRedux} from 'dva/router'
 import {connect} from 'dva'
-import AdminList from './List'
-import AdminSearch from './Search'
-import AdminModal from './ModalForm'
+import UserList from './List'
+import UserSearch from './Search'
+import UserModal from './ModalForm'
 import {checkPower} from '../../../utils'
 import {ADD, UPDATE, DELETE} from '../../../constants/options'
 
-function Admin({location, curPowers, dispatch, accountAdmin, modal, loading}) {
+function User({location, curPowers, dispatch, systemUser, modal, loading}) {
 
   const addPower = checkPower(ADD, curPowers)
   const updatePower = checkPower(UPDATE, curPowers)
@@ -33,7 +33,7 @@ function Admin({location, curPowers, dispatch, accountAdmin, modal, loading}) {
     },
     onAdd() {
       dispatch({
-        type: 'accountAdmin/showModal',
+        type: 'systemUser/showModal',
         payload: {
           type: 'create'
         }
@@ -42,17 +42,17 @@ function Admin({location, curPowers, dispatch, accountAdmin, modal, loading}) {
   }
 
   const listProps = {
-    accountAdmin,
+    systemUser,
     loading,
     updatePower,
     deletePower,
     location,
     onDeleteItem(id) {
-      dispatch({type: 'accountAdmin/delete', payload: {id}})
+      dispatch({type: 'systemUser/delete', payload: {id}})
     },
     onEditItem(item) {
       dispatch({
-        type: 'accountAdmin/showModal',
+        type: 'systemUser/showModal',
         payload: {
           type: 'update',
           curItem: item
@@ -61,7 +61,7 @@ function Admin({location, curPowers, dispatch, accountAdmin, modal, loading}) {
     },
     onStatusItem(item) {
       dispatch({
-        type: 'accountAdmin/updateStatus',
+        type: 'systemUser/updateStatus',
         payload: {
           curItem: item
         }
@@ -75,8 +75,8 @@ function Admin({location, curPowers, dispatch, accountAdmin, modal, loading}) {
     onOk(data) {
       dispatch({
         type: !!data.id
-          ? 'accountAdmin/update'
-          : 'accountAdmin/create',
+          ? 'systemUser/update'
+          : 'systemUser/create',
         payload: {
           curItem: data
         }
@@ -89,15 +89,15 @@ function Admin({location, curPowers, dispatch, accountAdmin, modal, loading}) {
 
   return (
     <div className='content-inner'>
-      <AdminSearch {...searchProps}/>
-      <AdminList {...listProps}/>
-      <AdminModal {...modalProps}/>
+      <UserSearch {...searchProps}/>
+      <UserList {...listProps}/>
+      <UserModal {...modalProps}/>
     </div>
   )
 }
 
-function mapStateToProps({ accountAdmin, modal, loading }) {
-  return { accountAdmin, modal, loading: loading.models.accountAdmin }
+function mapStateToProps({ systemUser, modal, loading }) {
+  return { systemUser, modal, loading: loading.models.systemUser }
 }
 
-export default connect(mapStateToProps)(Admin)
+export default connect(mapStateToProps)(User)

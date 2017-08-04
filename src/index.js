@@ -25,9 +25,9 @@ if(newband.app.admin.IS_DYNAMIC_LOAD) {
 } else {
   app.model(require('./models/dashboard'))
 
-  app.model(require('./models/account/admin'))
-  app.model(require('./models/account/user'))
-  app.model(require('./models/account/role'))
+  app.model(require('./models/system/admin'))
+  app.model(require('./models/system/user'))
+  app.model(require('./models/system/role'))
 
   app.model(require('./models/system/modifyPassword'))
 

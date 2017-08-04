@@ -3,7 +3,7 @@ const Mock = require('mockjs')
 import mockStorge from '../../src/utils/mockStorge'
 import { getBody } from '../utils'
 
-let dataKey = mockStorge('AccountAdminList', Mock.mock({
+let dataKey = mockStorge('SystemAdminList', Mock.mock({
   'data|100': [
     {
       'id|+1': 1,
@@ -76,7 +76,7 @@ module.exports = {
     newData.createTime = Mock.mock('@now')
     newData.avatar = Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', newData.name.substr(0, 1))
 
-    const roleListData = global['AccountRoleList'].data
+    const roleListData = global['SystemRoleList'].data
     const roleList = roleListData.map(item => {
       return item.name
     })
@@ -112,7 +112,7 @@ module.exports = {
   'PUT /api/admin' (req, res) {
     const editItem = getBody(req)
 
-    const roleListData = global['AccountRoleList'].data
+    const roleListData = global['SystemRoleList'].data
     const roleList = roleListData.map(item => {
       return item.name
     })

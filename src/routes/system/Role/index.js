@@ -8,7 +8,7 @@ import RoleModal from './ModalForm'
 import {checkPower} from '../../../utils'
 import {ADD, UPDATE, DELETE} from '../../../constants/options'
 
-function Role({location, curPowers, dispatch, accountRole, modal, loading}) {
+function Role({location, curPowers, dispatch, systemRole, modal, loading}) {
 
   const addPower = checkPower(ADD, curPowers)
   const updatePower = checkPower(UPDATE, curPowers)
@@ -31,13 +31,13 @@ function Role({location, curPowers, dispatch, accountRole, modal, loading}) {
   }
 
   const listProps = {
-    accountRole,
+    systemRole,
     loading,
     updatePower,
     deletePower,
     location,
     onDeleteItem(id) {
-      dispatch({type: 'accountRole/delete', payload: {id}})
+      dispatch({type: 'systemRole/delete', payload: {id}})
     },
     onEditItem(item) {
       dispatch({
@@ -56,8 +56,8 @@ function Role({location, curPowers, dispatch, accountRole, modal, loading}) {
     onOk(data) {
       dispatch({
         type: !!data.id
-          ? 'accountRole/update'
-          : 'accountRole/create',
+          ? 'systemRole/update'
+          : 'systemRole/create',
         payload: {
           curItem: data
         }
@@ -78,13 +78,13 @@ function Role({location, curPowers, dispatch, accountRole, modal, loading}) {
 }
 
 Role.propTypes = {
-  accountRole: PropTypes.object,
+  systemRole: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func
 }
 
-function mapStateToProps({ accountRole, modal, loading }) {
-  return { accountRole, modal, loading: loading.models.accountRole }
+function mapStateToProps({ systemRole, modal, loading }) {
+  return { systemRole, modal, loading: loading.models.systemRole }
 }
 
 export default connect(mapStateToProps)(Role)

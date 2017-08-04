@@ -24,11 +24,9 @@ export default function ({history, app}) {
       <Route path="/" component={require("./routes/App")} onEnter={redirectToLogin}>
         <IndexRoute component={require("./routes/Dashboard")}/>
         <Route path="dashboard" component={require("./routes/Dashboard")}/>
-        <Route path="diancai">
-          <Route path="mcinfo" component={require("./routes/account/mcinfo")}/>
-          <Route path="dishes" component={require("./routes/account/dishes")}/>
-        </Route>
-        <Route path="card">
+        <Route path="system">
+          <Route path="userinfo" component={require("./routes/system/userinfo")}/>
+          <Route path="role" component={require("./routes/system/role")}/>
           <Route path="modify-password" component={require("./routes/system/ModifyPassword")}></Route>
         </Route>
         <Route path="no-power" component={require("./routes/NoPower")}/>

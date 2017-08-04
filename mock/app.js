@@ -46,7 +46,7 @@ module.exports = {
         // Cookie.set('user_session', now.getTime())
         // Cookie.set('user_name', userItem.username)
         // Cookie.set('user_power', power)
-        const power = global['AccountPowerList'].data[d[0].roleId]
+        const power = global['SystemPowerList'].data[d[0].roleId]
 
         response.msg = '登录成功'
         response.success = true

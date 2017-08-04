@@ -1,6 +1,6 @@
 const Mock = require('mockjs')
 const mockData = [require('../../mock/app'), require('../../mock/dashboard'),
-	require('../../mock/account/admin'), require('../../mock/account/user'), require('../../mock/account/role'),
+	require('../../mock/system/admin'), require('../../mock/system/userinfo'), require('../../mock/system/role'),
 	require('../../mock/system/modifyPassword')
 ]
 

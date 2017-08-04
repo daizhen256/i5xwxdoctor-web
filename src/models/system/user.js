@@ -1,10 +1,10 @@
 import { message } from 'antd'
 import { routerRedux } from 'dva/router'
-import { create, remove, update, query, queryPowerList } from '../../services/account/role'
+import { create, remove, update, query, queryPowerList } from '../../services/system/role'
 import { getCurPowers } from '../../utils'
 
 export default {
-  namespace: 'accountRole',
+  namespace: 'systemUser',
   state: {
     list: []
   },
@@ -13,7 +13,7 @@ export default {
     setup ({ dispatch, history }) {
       history.listen(location => {
         const pathname = location.pathname
-        if (pathname === '/account/role') {
+        if (pathname === '/system/User') {
           const curPowers = getCurPowers(pathname)
           if(curPowers) {
             dispatch({ type: 'app/changeCurPowers', payload: { curPowers } })
