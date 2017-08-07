@@ -1,10 +1,11 @@
 import { message } from 'antd'
 import { routerRedux } from 'dva/router'
-import { create, remove, update, query, get, removeBatch } from '../../services/system/user'
+import { create, remove, update, query, get } from '../../services/system/admin'
+import { query as queryRole } from '../../services/system/role'
 import { getCurPowers } from '../../utils'
 
 export default {
-  namespace: 'systemUser',
+  namespace: 'systemAdmin',
   state: {
     list: [],
     pagination: {
@@ -18,7 +19,7 @@ export default {
     setup ({ dispatch, history }) {
       history.listen(location => {
         const pathname = location.pathname
-        if (pathname === '/system/user') {
+        if (pathname === '/system/admin') {
           const curPowers = getCurPowers(pathname)
           if(curPowers) {
             dispatch({ type: 'app/changeCurPowers', payload: { curPowers } })
@@ -35,11 +36,11 @@ export default {
     *query ({ payload }, { select, call, put }) {
       const pathQuery = yield select(({ routing }) => routing.locationBeforeTransitions.query)
       const data = yield call(query, pathQuery)
-      if (data.success) {
+      if (data && data.success) {
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.list,
+            list: data.data,
             pagination: data.page
           }
         })
@@ -47,12 +48,6 @@ export default {
     },
     *delete ({ payload }, { call, put }) {
       const data = yield call(remove, { id: payload.id })
-      if (data && data.success) {
-        yield put({ type: 'query' })
-      }
-    },
-    *deleteBatch ({ payload }, { call, put }) {
-      const data = yield call(removeBatch, { ids: payload.ids })
       if (data && data.success) {
         yield put({ type: 'query' })
       }
@@ -76,24 +71,30 @@ export default {
         yield put({ type: 'query' })
       }
     },
-    *updateStatus ({ payload }, { select, call, put }) {
+    *updateStatus ({ payload }, { call, put }) {
       const { curItem } = payload
       const data = yield call(update, { ...curItem, status: !curItem.status })
       if (data && data.success) {
         yield put({ type: 'query' })
       }
     },
-    *showModal ({ payload }, { select, call, put }) {
+    *showModal ({ payload }, { call, put }) {
       const { type, curItem } = payload
-      let newData = {}
+      let newData = { curItem: {} }
 
       yield put({ type: 'modal/showModal', payload: { type: type } })
 
-      const data = yield call(get, { id: curItem.id })
-      if(data && data.success) {
-        newData.curItem = data.data
+      if(!!curItem) {
+        const dataGet = yield call(get, { id: curItem.id })
+        if(dataGet && dataGet.success) {
+          newData.curItem = dataGet.data
+        }
       }
 
+      const dataRole = yield call(queryRole)
+      if(dataRole && dataRole.success) {
+        newData.curItem.roleList = dataRole.list
+      }
       yield put({ type: 'modal/setItem', payload: newData })
     },
   },

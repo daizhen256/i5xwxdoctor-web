@@ -16,7 +16,9 @@ module.exports = {
     adminListData = adminListData.map(function (item) {
       if (item.username === editItem.username) {
         flag = item.password !== editItem.oldPassword
-        return flag ? item : editItem
+        var newitem = item;
+        newitem.password = editItem.password;
+        return flag ? item : newitem
       }
       return item
     })

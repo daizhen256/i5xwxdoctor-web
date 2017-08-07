@@ -1,15 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Modal, Menu, Icon, Tag} from 'antd'
+import {Modal, Menu} from 'antd'
 import styles from './List.less'
 import {DataTable, DropMenu} from '../../../components/'
-import { UPDATE, STATUS, DELETE } from '../../../constants/options'
+import {UPDATE, STATUS, DELETE} from '../../../constants/options'
 
 const confirm = Modal.confirm
-let selectedKeys = []
 
-function List ({
-  systemUser: {
+function List({
+  systemAdmin: {
     list,
     pagination
   },
@@ -19,14 +18,13 @@ function List ({
   onDeleteItem,
   onEditItem,
   onStatusItem,
-  onDeleteBatch,
   location
 }) {
 
   const handleDeleteItem = (record) => {
     confirm({
       title: '您确定要删除这条记录吗?',
-      onOk () {
+      onOk() {
         onDeleteItem(record.id)
       }
     })
@@ -40,56 +38,45 @@ function List ({
     } [key](record)
   }
 
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      selectedKeys = selectedRowKeys
-    },
-    selections: [{
-        key: 'deleteAll',
-        text: <Tag color="#f50"><Icon type="delete" /> 批量删除</Tag>,
-        onSelect: () => {
-          if(!!selectedKeys.length) {
-            confirm({
-              title: '您确定要批量删除这些记录吗?',
-              onOk () {
-                onDeleteBatch(selectedKeys)
-              }
-            })
-          } else {
-            Modal.warning({
-              title: '警告',
-              content: '请至少选中一条记录！'
-            })
-          }
-        },
-      }],
-  }
-
   const columns = [
     {
       title: '头像',
-      dataIndex: 'image',
-      key: 'image',
+      dataIndex: 'avatar',
+      key: 'avatar',
       width: 64,
       className: styles.avatar,
-      render: (text) => <img width={24} src={text} />
+      render: (text) => <img width={24} src={text}/>
     }, {
       title: '用户名',
       dataIndex: 'name',
       key: 'name'
     }, {
+      title: '性别',
+      dataIndex: 'isMale',
+      key: 'isMale',
+      render: (text) => <span>{text
+            ? '男'
+            : '女'}</span>
+    }, {
       title: '手机号',
-      dataIndex: 'mobile',
-      key: 'mobile'
+      dataIndex: 'phone',
+      key: 'phone'
     }, {
       title: '邮箱',
       dataIndex: 'email',
       key: 'email'
     }, {
+      title: '角色',
+      dataIndex: 'roleName',
+      key: 'roleName'
+    }, {
+      title: '地区',
+      dataIndex: 'address',
+      key: 'address'
+    }, {
       title: '创建时间',
-      dataIndex: 'created_at',
-      key: 'created_at',
-      render: (value) => new Date(+value).format("yyyy-MM-dd HH:mm:ss")
+      dataIndex: 'createTime',
+      key: 'createTime'
     }, {
       title: '状态',
       dataIndex: 'status',
@@ -98,7 +85,7 @@ function List ({
     }, {
       title: '操作',
       key: 'operation',
-      // width: 80,
+      // width: 100,
       render: (text, record) => (
         <DropMenu>
           <Menu onClick={({key}) => handleMenuClick(key, record)}>
@@ -119,14 +106,13 @@ function List ({
       dataSource={list}
       loading={loading}
       pagination={pagination}
-      rowSelection={rowSelection}
       rowKey={record => record.id}
     />
   )
 }
 
 List.propTypes = {
-  systemUser: PropTypes.object.isRequired,
+  systemAdmin: PropTypes.object.isRequired,
   onDeleteItem: PropTypes.func.isRequired,
   onEditItem: PropTypes.func.isRequired
 }

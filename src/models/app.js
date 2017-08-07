@@ -92,6 +92,19 @@ export default {
             state: { nextPathname: location.pathname, nextSearch: location.search }
           }))
         }
+    },
+    *modifyPassword({
+        payload
+      }, {call, put}) {
+        const data = { success: true } //yield call(logout, parse(payload))
+        if (data && data.success) {
+          //yield setLoginOut()
+          //yield put({type: 'logoutSuccess'})
+          yield put(routerRedux.push({
+            pathname: '/system/modify-password',
+            state: { nextPathname: location.pathname, nextSearch: location.search }
+          }))
+        }
     }
   },
   reducers : {

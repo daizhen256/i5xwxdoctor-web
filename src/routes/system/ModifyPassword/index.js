@@ -2,18 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'dva'
 import ModifyForm from './ModifyForm'
-import { checkPower, checkQueryPower } from '../../../utils'
-import { UPDATE } from '../../../constants/options'
 
 import { Link } from 'dva/router'
 
-function ModifyPassword({ dispatch, curPowers, systemModifyPassword, loading }) {
-
-  const updatePower = checkPower(UPDATE, curPowers)
+function ModifyPassword({ dispatch, systemModifyPassword, loading }) {
 
   const modifyFormProps = {
     loading,
-    updatePower,
     onOk(data) {
       dispatch({ type: `systemModifyPassword/update`, payload: data })
     }

@@ -6,8 +6,8 @@ import Menus from './Menu'
 
 const SubMenu = Menu.SubMenu
 
-function Header ({user, logout, switchSider, siderFold, isNavbar, menuPopoverVisible, location, switchMenuPopover, navOpenKeys, userPower, changeOpenKeys}) {
-  let handleClickMenu = e => e.key === 'logout' && logout()
+function Header ({user, logout, modifyPassword, switchSider, siderFold, isNavbar, menuPopoverVisible, location, switchMenuPopover, navOpenKeys, userPower, changeOpenKeys}) {
+  let handleClickMenu = e => (e.key === 'logout' && logout()) || (e.key === 'modify-password' && modifyPassword())
   const menusProps = {
     siderFold: false,
     darkTheme: false,
@@ -31,8 +31,11 @@ function Header ({user, logout, switchSider, siderFold, isNavbar, menuPopoverVis
         </div>}
       <div className={styles.right}>
         <BadgeBox />
-        <Menu className='header-menu' mode='horizontal' onClick={handleClickMenu} style={{ textAlign: 'center' }}>
+        <Menu className='header-menu' mode='horizontal' onClick={handleClickMenu} style={{ textAlign: 'center',zIndex: '99999'}}>
           <SubMenu title={<span><Icon type='user' />{user.name}</span>}>
+            <Menu.Item key='modify-password'>
+              <a>修改密码</a>
+            </Menu.Item>
             <Menu.Item key='logout'>
               <a>注销</a>
             </Menu.Item>

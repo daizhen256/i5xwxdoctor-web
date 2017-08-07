@@ -59,6 +59,16 @@ export default function({history, app}) {
           name: 'system',
           childRoutes: [
             {
+              path: 'admin',
+              name: 'admin',
+              getComponent(nextState, cb) {
+                require.ensure([], require => {
+                  registerModel(app, require('./models/system/admin'))
+                  cb(null, require('./routes/system/Admin'))
+                }, 'system-admin')
+              }
+            },
+            {
               path: 'role',
               name: 'role',
               getComponent(nextState, cb) {

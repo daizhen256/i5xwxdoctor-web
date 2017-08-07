@@ -31,6 +31,9 @@ function App ({ children, location, dispatch, app, loading }) {
     switchMenuPopover () {
       dispatch({type: 'app/switchMenuPopver'})
     },
+    modifyPassword () {
+      dispatch({type: 'app/modifyPassword'})
+    },
     logout () {
       dispatch({type: 'app/logout'})
     },

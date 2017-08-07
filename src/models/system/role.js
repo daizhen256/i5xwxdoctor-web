@@ -1,18 +1,12 @@
 import { message } from 'antd'
 import { routerRedux } from 'dva/router'
-import { create, remove, update, query, get } from '../../services/system/admin'
-import { query as queryRole } from '../../services/system/role'
+import { create, remove, update, query, queryPowerList } from '../../services/system/role'
 import { getCurPowers } from '../../utils'
 
 export default {
   namespace: 'systemRole',
   state: {
-    list: [],
-    pagination: {
-      current: 1,
-      pageSize: 10,
-      total: null
-    }
+    list: []
   },
 
   subscriptions: {
@@ -33,15 +27,13 @@ export default {
   },
 
   effects: {
-    *query ({ payload }, { select, call, put }) {
-      const pathQuery = yield select(({ routing }) => routing.locationBeforeTransitions.query)
-      const data = yield call(query, pathQuery)
-      if (data && data.success) {
+    *query ({ payload }, { call, put }) {
+      const data = yield call(query)
+      if (data.success) {
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.data,
-            pagination: data.page
+            list: data.list
           }
         })
       }
@@ -52,51 +44,25 @@ export default {
         yield put({ type: 'query' })
       }
     },
-    *create ({ payload }, { select, call, put }) {
-      const data = yield call(create, payload.curItem)
+    *create ({ payload }, { call, put }) {
+      const { curItem } = payload
+      const params = { ...curItem, power: JSON.stringify(curItem.power) }
+      const data = yield call(create, params)
       if (data && data.success) {
         yield put({ type: 'modal/hideModal' })
-        const pathQuery = yield select(({ routing }) => routing.locationBeforeTransitions.query)
-        const { page } = pathQuery
-        yield put(routerRedux.push({
-          pathname: location.pathname,
-          query: !!page ? { ...pathQuery, page: 1 } : pathQuery
-        }))
+        yield put({ type: 'query' })
       }
     },
     *update ({ payload }, { call, put }) {
-      const data = yield call(update, payload.curItem)
+      const { curItem } = payload
+      const params = { ...curItem, power: JSON.stringify(curItem.power) }
+      const data = yield call(update, params)
       if (data && data.success) {
         yield put({ type: 'modal/hideModal' })
         yield put({ type: 'query' })
+        message.success("角色修改成功, 注销登录后重新登录即可生效！")
       }
-    },
-    *updateStatus ({ payload }, { call, put }) {
-      const { curItem } = payload
-      const data = yield call(update, { ...curItem, status: !curItem.status })
-      if (data && data.success) {
-        yield put({ type: 'query' })
-      }
-    },
-    *showModal ({ payload }, { call, put }) {
-      const { type, curItem } = payload
-      let newData = { curItem: {} }
-
-      yield put({ type: 'modal/showModal', payload: { type: type } })
-
-      if(!!curItem) {
-        const dataGet = yield call(get, { id: curItem.id })
-        if(dataGet && dataGet.success) {
-          newData.curItem = dataGet.data
-        }
-      }
-
-      const dataRole = yield call(queryRole)
-      if(dataRole && dataRole.success) {
-        newData.curItem.roleList = dataRole.list
-      }
-      yield put({ type: 'modal/setItem', payload: newData })
-    },
+    }
   },
 
   reducers: {
@@ -104,4 +70,5 @@ export default {
       return { ...state, ...action.payload }
     }
   }
+
 }

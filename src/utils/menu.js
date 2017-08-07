@@ -28,15 +28,15 @@ const menu = [
       },
       {
         id: _.uniqueId(),
-        key: 'role',
-        name: '权限管理',
+        key: 'admin',
+        name: '管理员管理',
         power: [1, 2, 3, 4, 5]
       },
       {
         id: _.uniqueId(),
-        key: 'modify-password',
-        name: '修改密码',
-        power: [1, 2, 4]
+        key: 'role',
+        name: '权限管理',
+        power: [1, 2, 3, 4, 5]
       }
     ]
   }

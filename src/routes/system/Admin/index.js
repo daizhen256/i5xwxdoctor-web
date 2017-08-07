@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {routerRedux} from 'dva/router'
 import {connect} from 'dva'
-import UserList from './List'
-import UserSearch from './Search'
-import UserModal from './ModalForm'
+import AdminList from './List'
+import AdminSearch from './Search'
+import AdminModal from './ModalForm'
 import {checkPower} from '../../../utils'
 import {ADD, UPDATE, DELETE} from '../../../constants/options'
 
-function User({location, curPowers, dispatch, systemUser, modal, loading}) {
+function Admin({location, curPowers, dispatch, systemAdmin, modal, loading}) {
 
   const addPower = checkPower(ADD, curPowers)
   const updatePower = checkPower(UPDATE, curPowers)
@@ -33,7 +33,7 @@ function User({location, curPowers, dispatch, systemUser, modal, loading}) {
     },
     onAdd() {
       dispatch({
-        type: 'modal/showModal',
+        type: 'systemAdmin/showModal',
         payload: {
           type: 'create'
         }
@@ -42,17 +42,17 @@ function User({location, curPowers, dispatch, systemUser, modal, loading}) {
   }
 
   const listProps = {
-    systemUser,
+    systemAdmin,
     loading,
     updatePower,
     deletePower,
     location,
     onDeleteItem(id) {
-      dispatch({type: 'systemUser/delete', payload: {id}})
+      dispatch({type: 'systemAdmin/delete', payload: {id}})
     },
     onEditItem(item) {
       dispatch({
-        type: 'systemUser/showModal',
+        type: 'systemAdmin/showModal',
         payload: {
           type: 'update',
           curItem: item
@@ -61,19 +61,12 @@ function User({location, curPowers, dispatch, systemUser, modal, loading}) {
     },
     onStatusItem(item) {
       dispatch({
-        type: 'systemUser/updateStatus',
+        type: 'systemAdmin/updateStatus',
         payload: {
           curItem: item
         }
       })
-    },
-    onDeleteBatch(ids) {
-        dispatch({
-          type: 'systemUser/deleteBatch',
-          payload: { ids }
-        })
     }
-
   }
 
   const modalProps = {
@@ -82,8 +75,8 @@ function User({location, curPowers, dispatch, systemUser, modal, loading}) {
     onOk(data) {
       dispatch({
         type: !!data.id
-          ? 'systemUser/update'
-          : 'systemUser/create',
+          ? 'systemAdmin/update'
+          : 'systemAdmin/create',
         payload: {
           curItem: data
         }
@@ -96,21 +89,15 @@ function User({location, curPowers, dispatch, systemUser, modal, loading}) {
 
   return (
     <div className='content-inner'>
-      <UserSearch {...searchProps}/>
-      <UserList {...listProps}/>
-      <UserModal {...modalProps}/>
+      <AdminSearch {...searchProps}/>
+      <AdminList {...listProps}/>
+      <AdminModal {...modalProps}/>
     </div>
   )
 }
 
-User.propTypes = {
-  systemUser: PropTypes.object,
-  location: PropTypes.object,
-  dispatch: PropTypes.func
+function mapStateToProps({ systemAdmin, modal, loading }) {
+  return { systemAdmin, modal, loading: loading.models.systemAdmin }
 }
 
-function mapStateToProps({ systemUser, modal, loading }) {
-  return { systemUser, modal, loading: loading.models.systemUser }
-}
-
-export default connect(mapStateToProps)(User)
+export default connect(mapStateToProps)(Admin)

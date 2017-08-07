@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Icon } from 'antd'
+import { Form, Input, InputNumber, Radio, Modal, Icon, Select } from 'antd'
 import { validPhone } from '../../../utils/utilsValid'
 
 const FormItem = Form.Item
+
+const Option = Select.Option
 
 const formItemLayout = {
   labelCol: {
@@ -25,7 +27,12 @@ const ModalForm = ({
   onOk,
   onCancel
 }) => {
-  function handleOk () {
+
+  if(!curItem.roleList) {
+    curItem.roleList = []
+  }
+
+  const handleOk = () => {
     validateFields((errors, values) => {
       if (errors) {
         return
@@ -39,7 +46,7 @@ const ModalForm = ({
   }
 
   const modalFormOpts = {
-    title: type === 'create' ? <div><Icon type="plus-circle-o" /> 新建用户</div> : <div><Icon type="edit" /> 修改用户</div>,
+    title: type === 'create' ? <div><Icon type="plus-circle-o" /> 新建管理员</div> : <div><Icon type="edit" /> 修改管理员</div>,
     visible,
     wrapClassName: 'vertical-center-modal',
     confirmLoading: loading,
@@ -64,9 +71,26 @@ const ModalForm = ({
             ]
           })(<Input />)}
         </FormItem>
+        <FormItem label='性别' hasFeedback {...formItemLayout}>
+          {getFieldDecorator('isMale', {
+            initialValue: curItem.isMale,
+            rules: [
+              {
+                required: true,
+                type: 'boolean',
+                message: '请选择性别'
+              }
+            ]
+          })(
+            <Radio.Group>
+              <Radio value>男</Radio>
+              <Radio value={false}>女</Radio>
+            </Radio.Group>
+          )}
+        </FormItem>
         <FormItem label='手机号：' hasFeedback {...formItemLayout}>
-          {getFieldDecorator('mobile', {
-            initialValue: curItem.mobile,
+          {getFieldDecorator('phone', {
+            initialValue: curItem.phone,
             rules: [
               {
                 required: true,
@@ -89,6 +113,29 @@ const ModalForm = ({
               {
                 type: 'email',
                 message: '邮箱格式不正确'
+              }
+            ]
+          })(<Input type='email'/>)}
+          {/*(<InputEmailComplete/>)}*/}
+        </FormItem>
+        <FormItem label='角色：' hasFeedback {...formItemLayout}>
+          {getFieldDecorator('roleId', {
+            initialValue: curItem.roleId && curItem.roleId.toString(),
+            rules: [
+              {
+                required: true,
+                message: '角色不能为空'
+              }
+            ]
+          })(<Select placeholder='--请选择角色--'>{curItem.roleList.map(item => <Option key={item.id} value={item.id.toString()}>{item.name}</Option>)}</Select>)}
+        </FormItem>
+        <FormItem label='地区：' hasFeedback {...formItemLayout}>
+          {getFieldDecorator('address', {
+            initialValue: curItem.address,
+            rules: [
+              {
+                required: true,
+                message: '地区不能为空'
               }
             ]
           })(<Input />)}
