@@ -1,32 +1,43 @@
-import React, {Component} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import {connect} from 'dva'
-import {routerRedux} from 'dva/router'
-import { Card, Icon, Badge, Progress } from 'antd'
+import { Icon, Badge, Popover } from 'antd'
+import styles from './GeniusBadge.less'
 
-function GeniusBadge({}) {
+function GeniusBadge() {
 
     let badgeProps = {
-        icontype?: 
     }
 
+    const content = (
+    <div>
+        <p>Content</p>
+        <p>Content</p>
+    </div>
+    )
+
+    const text = <span>Title</span>;
+
+
     return (
-        <Badge count={100} overflowCount={99}>
-          <Icon type="notification" className={styles.size}/>
-        </Badge>
+        <Popover placement="bottom" title={text} content={content} trigger="click">
+            <Badge count={ this.props.badgeCount } overflowCount={99} style={ this.props.badgeStyle }>
+                <Icon type={ this.props.type } className={ this.props.iconStyle }/>
+            </Badge>
+        </Popover>
     )
 }
 
-GeniusBadge.PropTypes = {
-    className: PropTypes.string
+GeniusBadge.propTypes = {
+  location: PropTypes.object,
+  type: PropTypes.string.isRequired,
+  iconStyle: PropTypes.any,
+  badgeStyle: PropTypes.any,
+  className: PropTypes.string,
+  badgeCount: PropTypes.any
 }
 
 GeniusBadge.defaultProps = {
-    animate: true
+    //animate: true
 }
 
-function mapStateToProps({ routing, app }) {
-  return { location: routing.locationBeforeTransitions }
-}
-
-export default connect(mapStateToProps)(GeniusBadge)
+export default GeniusBadge
