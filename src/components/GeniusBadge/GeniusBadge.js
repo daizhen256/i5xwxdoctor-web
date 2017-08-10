@@ -1,27 +1,42 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'dva/router'
 import { Icon, Badge, Popover } from 'antd'
 import styles from './GeniusBadge.less'
 
-function GeniusBadge() {
+function GeniusBadge({badgeCount,badgeStyle,type,iconStyle}) {
 
-    let badgeProps = {
-    }
 
     const content = (
     <div>
         <p>Content</p>
         <p>Content</p>
+        <Link to='/'><Icon type='home' /><span>主页</span></Link>
     </div>
     )
 
     const text = <span>Title</span>;
 
+    let badgeProps = {
+        count: badgeCount,
+        overflowCount: 99,
+        style: badgeStyle
+    }
+    let popoverProps = {
+        placement: "bottomLeft",
+        title: text,
+        content: content,
+        trigger: "click"
+    }
+    let iconProps = {
+        type: type,
+        className: iconStyle
+    }
 
     return (
-        <Popover placement="bottom" title={text} content={content} trigger="click">
-            <Badge count={ this.props.badgeCount } overflowCount={99} style={ this.props.badgeStyle }>
-                <Icon type={ this.props.type } className={ this.props.iconStyle }/>
+        <Popover {...popoverProps}>
+            <Badge {...badgeProps}>
+                <Icon {...iconProps}/>
             </Badge>
         </Popover>
     )
@@ -33,7 +48,7 @@ GeniusBadge.propTypes = {
   iconStyle: PropTypes.any,
   badgeStyle: PropTypes.any,
   className: PropTypes.string,
-  badgeCount: PropTypes.any
+  badgeCount: PropTypes.number
 }
 
 GeniusBadge.defaultProps = {
