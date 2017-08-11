@@ -8,11 +8,11 @@ function GeniusBadge({badgeCount,badgeStyle,type,iconStyle}) {
 
 
     const content = (
-    <div>
-        <p>Content</p>
-        <p>Content</p>
-        <Link to='/'><Icon type='home' /><span>主页</span></Link>
-    </div>
+    <ul>
+        <li><Link style={{ borderBottom: '1px solid #f4f4f4 !important' }} to='/'>Content</Link></li>
+        <li><Link style={{ borderBottom: '1px solid #f4f4f4 !important' }} to='/'>Content</Link></li>
+        <li><Link to='/' style={{ borderBottom: '1px solid #f4f4f4 !important' }}>显示全部<Icon type="right-circle-o" style={{ backgroundPosition: '-27px -10px', float: 'right' }}/></Link></li>
+    </ul>
     )
 
     const text = <span>Title</span>;
