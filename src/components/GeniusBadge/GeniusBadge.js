@@ -9,9 +9,9 @@ function GeniusBadge({badgeCount,badgeStyle,type,iconStyle}) {
 
     const content = (
     <ul>
-        <li><Link style={{ borderBottom: '1px solid #f4f4f4 !important' }} to='/'>Content</Link></li>
-        <li><Link style={{ borderBottom: '1px solid #f4f4f4 !important' }} to='/'>Content</Link></li>
-        <li><Link to='/' style={{ borderBottom: '1px solid #f4f4f4 !important' }}>显示全部<Icon type="right-circle-o" style={{ backgroundPosition: '-27px -10px', float: 'right' }}/></Link></li>
+        <li className={styles.popoverli}><Link activeStyle={{  display: 'block' }} to='/'><span>Content</span></Link></li>
+        <li className={styles.popoverli}><Link activeStyle={{  display: 'block' }} to='/'><span>Content</span></Link></li>
+        <li className={styles.popoverli}><Link to='/' activeStyle={{  display: 'block' }}><span>显示全部<Icon type="right-circle-o" style={{ backgroundPosition: '-27px -10px', float: 'right' }}/></span></Link></li>
     </ul>
     )
 
@@ -26,7 +26,8 @@ function GeniusBadge({badgeCount,badgeStyle,type,iconStyle}) {
         placement: "bottomLeft",
         title: text,
         content: content,
-        trigger: "click"
+        trigger: "click",
+        arrowPointAtCenter : true
     }
     let iconProps = {
         type: type,
