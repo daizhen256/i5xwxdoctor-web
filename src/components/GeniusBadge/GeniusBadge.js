@@ -8,11 +8,11 @@ function GeniusBadge({badgeCount,badgeStyle,type,iconStyle}) {
 
 
     const content = (
-    <ul>
-        <li className={styles.popoverli}><Link activeStyle={{  display: 'block' }} to='/'><span>Content</span></Link></li>
-        <li className={styles.popoverli}><Link activeStyle={{  display: 'block' }} to='/'><span>Content</span></Link></li>
-        <li className={styles.popoverli}><Link to='/' activeStyle={{  display: 'block' }}><span>显示全部<Icon type="right-circle-o" style={{ backgroundPosition: '-27px -10px', float: 'right' }}/></span></Link></li>
-    </ul>
+        <ul>
+            <li className={styles.popoverli}><Link activeStyle={{  display: 'block' }} to='/'><span>Content</span></Link></li>
+            <li className={styles.popoverli}><Link activeStyle={{  display: 'block' }} to='/'><span>Content</span></Link></li>
+            <li className={styles.popoverli}><Link to='/' activeStyle={{  display: 'block' }}><span>显示全部<Icon type="right-circle-o" style={{ fontSize: '20px', backgroundPosition: '-27px -10px', float: 'right' }}/></span></Link></li>
+        </ul>
     )
 
     const text = <span>Title</span>;
@@ -27,7 +27,7 @@ function GeniusBadge({badgeCount,badgeStyle,type,iconStyle}) {
         title: text,
         content: content,
         trigger: "click",
-        arrowPointAtCenter : true
+        arrowPointAtCenter : true,
     }
     let iconProps = {
         type: type,
